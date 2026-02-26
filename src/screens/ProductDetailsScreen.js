@@ -44,14 +44,31 @@ const ProductDetailsScreen = ({ route }) => {
               {product.category.toUpperCase()}
             </Text>
           </View>
-          {product.rating && (
-            <View style={styles.ratingBadge}>
-              <Text style={styles.ratingValue}>{product.rating.rate} ★</Text>
-              <Text style={styles.ratingCount}>
-                ({product.rating.count})
+          <View style={styles.metaRight}>
+            {product.rating && (
+              <View style={styles.ratingBadge}>
+                <Text style={styles.ratingValue}>{product.rating.rate} ★</Text>
+                <Text style={styles.ratingCount}>
+                  ({product.rating.count})
+                </Text>
+              </View>
+            )}
+            <TouchableOpacity
+              style={[
+                styles.favIconButton,
+                isFavorite && styles.favIconButtonActive,
+              ]}
+              onPress={handleToggleFavorite}
+              activeOpacity={0.7}
+            >
+              <Text style={[
+                styles.favIconText,
+                isFavorite && styles.favIconTextActive,
+              ]}>
+                {isFavorite ? '♥' : '♡'}
               </Text>
-            </View>
-          )}
+            </TouchableOpacity>
+          </View>
         </View>
 
         <Text style={styles.title}>{product.title}</Text>
@@ -63,23 +80,7 @@ const ProductDetailsScreen = ({ route }) => {
         <Text style={styles.descriptionLabel}>DESCRIPTION</Text>
         <Text style={styles.description}>{product.description}</Text>
 
-        <TouchableOpacity
-          style={[
-            styles.favoriteButton,
-            isFavorite && styles.favoriteButtonActive,
-          ]}
-          onPress={handleToggleFavorite}
-          activeOpacity={0.7}
-        >
-          <Text
-            style={[
-              styles.favoriteText,
-              isFavorite && styles.favoriteTextActive,
-            ]}
-          >
-            {isFavorite ? 'REMOVE FROM FAVORITES' : 'ADD TO FAVORITES'}
-          </Text>
-        </TouchableOpacity>
+
       </View>
     </ScrollView>
   );
@@ -113,6 +114,31 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  metaRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  favIconButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  favIconButtonActive: {
+    backgroundColor: '#fff',
+    borderColor: '#fff',
+  },
+  favIconText: {
+    fontSize: 18,
+    color: '#666',
+  },
+  favIconTextActive: {
+    color: '#e00',
   },
   categoryBadge: {
     borderWidth: 1,
@@ -181,27 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     letterSpacing: 0.3,
   },
-  favoriteButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#333',
-    borderRadius: 6,
-    paddingVertical: 17,
-  },
-  favoriteButtonActive: {
-    backgroundColor: '#fff',
-    borderColor: '#fff',
-  },
-  favoriteText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#999',
-    letterSpacing: 3,
-  },
-  favoriteTextActive: {
-    color: '#000',
-  },
+
 });
 
 export default ProductDetailsScreen;
