@@ -24,6 +24,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "740090ab-0037-4dc4-9202-6e63dbf0fd49"
+      }
+    },
+    "owner": "spandyzlost"
   }
 }
