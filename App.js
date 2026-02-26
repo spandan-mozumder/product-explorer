@@ -1,20 +1,32 @@
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Provider, useDispatch } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import store from './src/store';
+import AppNavigator from './src/navigation/AppNavigator';
+import { restoreToken } from './src/store/slices/authSlice';
+import { restoreFavorites } from './src/store/slices/favoritesSlice';
+
+const AppContent = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(restoreToken());
+    dispatch(restoreFavorites());
+  }, [dispatch]);
+
+  return (
+    <NavigationContainer>
+      <StatusBar style="light" />
+      <AppNavigator />
+    </NavigationContainer>
+  );
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
